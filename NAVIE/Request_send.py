@@ -27,7 +27,7 @@ class MyUser(HttpUser):
 
         # Read image files from the specified folder
         for filename in os.listdir(IMAGES_FOLDER):
-            if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
+            if filename.lower().endswith('.jpg') or filename.lower().endswith('.jpeg') or filename.lower().endswith('.png'):
                 image_path = os.path.join(IMAGES_FOLDER, filename)
                 self.image_data.append(image_path)
 
