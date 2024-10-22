@@ -27,22 +27,28 @@ class MyUser(HttpUser):
 
         # Read image files from the specified folder
         for filename in os.listdir(IMAGES_FOLDER):
-            if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
+            if filename.lower().endswith('.jpg') or filename.lower().endswith('.jpeg') or filename.lower().endswith('.png'):
                 image_path = os.path.join(IMAGES_FOLDER, filename)
                 self.image_data.append(image_path)
 
     @task
     def my_task(self):
-        if self.n >= len(self.wait_times):
-            # All rows completed, raise an exception to stop the execution
-            self.environment.runner.quit()
+        try:
+            if self.n >= len(self.wait_times):
+                # All rows completed, raise an exception to stop the execution
+                self.environment.runner.quit()
+                return
+
+            if self.n >= len(self.image_data):
+                return
+
+            image_file = open(self.image_data[self.n], "rb")
+            files = {'image': image_file}
+
+            spawn(self.client.post, "/object-detection", files=files)
+
+            time.sleep(self.wait_times[self.n])
+
+            self.n += 1
+        except Exception as e:
             return
-
-        image_file = open(self.image_data[self.n], "rb")
-        files = {'image': image_file}
-
-        spawn(self.client.post, "/object-detection", files=files)
-
-        time.sleep(self.wait_times[self.n])
-
-        self.n += 1
