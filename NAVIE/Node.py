@@ -12,7 +12,7 @@ from get_data import write_csv, write_json
 
 es = Elasticsearch(['localhost'])
 app = FastAPI()
-sys_approch = "NAIVE"
+sys_approach = "NAIVE"
 # Enable CORS for all routes
 app.add_middleware(
     CORSMiddleware,
@@ -43,12 +43,12 @@ def run_as_background(command):
 
 def run_in_new_terminal(command):
     try:
-        subprocess.Popen(['gnome-terminal', '--', 'bash', '-c', command])
+        subprocess.Popen(command, shell=True)
     except Exception as e:
         print("Couldn't run processes in terminal: ", str(e))
 
 
-def stop_proccess():
+def stop_process():
     try: 
         global running_processes
         for script in running_processes:
@@ -73,12 +73,12 @@ def stop_process_in_terminal(file):
         print("Error:", error.decode())
 
 @app.post("/api/upload")
-async def upload_files(zipFile: UploadFile = File(None), csvFile: UploadFile = File(...),  approch: str = Form(...), folder_location: str = Form(None)):
+async def upload_files(zipFile: UploadFile = File(None), csvFile: UploadFile = File(...),  approach: str = Form(...), folder_location: str = Form(None)):
 
-    global sys_approch
+    global sys_approach
     try:
-        print(approch)
-        sys_approch = approch
+        print(approach)
+        sys_approach = approach
         # Create a directory to store the uploaded files
         upload_dir = "uploads"
         shutil.rmtree(upload_dir, ignore_errors=True)
@@ -133,20 +133,20 @@ async def upload_files(zipFile: UploadFile = File(None), csvFile: UploadFile = F
         #Locust to send Request
         run_in_new_terminal(f'export CSV_FILE="{CSV_FILE}" && export IMAGES_FOLDER="{IMAGES_FOLDER}" && locust -f Request_send.py --headless  --host=http://localhost:5000/v1 --users 1 --spawn-rate 1')
         #to start monitoring
-        if(approch == "AdaMLs"):   
-            print("RUunning monitor_ada.py---------------------")
+        if(approach == "AdaMLs"):   
+            print("Running monitor_ada.py---------------------")
             run_in_terminal('python3 monitor_ada.py', working_directory='AdaMLs')
-        elif(approch == "NAIVE" or approch == "Try Your Own"):
-            print("RUunning monitor.py---------------------")
+        elif(approach == "NAIVE" or approach == "Try Your Own"):
+            print("Running monitor.py---------------------")
             run_in_terminal('python3 monitor.py')
-        elif(approch == "Write Your Own MAPE-K"):
-            print("Montior from director: ",monitor_directory)
+        elif(approach == "Write Your Own MAPE-K"):
+            print("Monitor from director: ", monitor_directory)
             run_in_terminal('python3 monitor.py', working_directory=f'{monitor_directory}')
           
         else:
             with open('model.csv', 'w') as file:
                 writer = csv.writer(file)
-                writer.writerow([approch])
+                writer.writerow([approach])
         #upload data to ES
         run_in_terminal('python3 logs_to_es.py')
         run_in_terminal('python3 metrics_to_es.py')
@@ -175,20 +175,20 @@ async def execute_python_script():
 async def stopProcess():
     try:
         stop_process_in_terminal("Request_send.py")
-        stop_proccess()
-        return {"message" : "Stoped succesful"}
+        stop_process()
+        return {"message" : "Stopped successful"}
     except Exception as e:
-        print("Error stoping:", str(e))
-        raise HTTPException(status_code=500, detail="An error occurred while stoping")
+        print("Error stopping:", str(e))
+        raise HTTPException(status_code=500, detail="An error occurred while stopping")
 
 @app.post("/api/newProcess")
 async def restartProcess():
     try:
         run_in_terminal('python3 process.py')
-        return {"message" : "Process succesful restarted"}
+        return {"message" : "Process successful restarted"}
     except Exception as e:
-        print("Error stoping:", str(e))
-        raise HTTPException(status_code=500, detail="An error occurred while stoping")
+        print("Error stopping:", str(e))
+        raise HTTPException(status_code=500, detail="An error occurred while stopping")
 
 
 
@@ -255,8 +255,8 @@ async def latest_metrics_data():
             print("No documents found in the index")
 
     except Exception as e:
-        print("Error stoping:", str(e))
-        raise HTTPException(status_code=500, detail="An error occurred while stoping")
+        print("Error stopping:", str(e))
+        raise HTTPException(status_code=500, detail="An error occurred while stopping")
 
 @app.post("/api/latest_logs")
 async def latest_log_data():
@@ -288,8 +288,8 @@ async def latest_log_data():
             print("No documents found in the index")
 
     except Exception as e:
-        print("Error stoping:", str(e))
-        raise HTTPException(status_code=500, detail="An error occurred while stoping")
+        print("Error stopping:", str(e))
+        raise HTTPException(status_code=500, detail="An error occurred while stopping")
 
 
 @app.post("/api/changeKnowledge")
@@ -314,7 +314,7 @@ async def change_knowledge(data: Dict[str, str]):
         return {"message" : "Changed knowledge file "}
        
     except Exception as e:
-        print("Error stoping:", str(e))
+        print("Error stopping:", str(e))
         raise HTTPException(status_code=500, detail="An error occurred updating knowledge file")
 
 
@@ -335,7 +335,7 @@ async def useNaive_knowledge():
         print("CSV data copied successfully.")
 
     except Exception as e:
-        print("Error stoping:", str(e))
+        print("Error stopping:", str(e))
         raise HTTPException(status_code=500, detail="An error occurred updating knowledge file")
     
 

@@ -8,7 +8,7 @@ analyzer_obj = Analyzer()
 
 
 class Monitor():
-    def continous_monitoring(self):
+    def continuous_monitoring(self):
         monitor_dict = {}
 
         # indicates monitoring has started
@@ -47,4 +47,4 @@ class Monitor():
 
 if __name__ == '__main__':
     monitor_obj = Monitor()
-    monitor_obj.continous_monitoring()
+    monitor_obj.continuous_monitoring()

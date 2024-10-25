@@ -103,7 +103,7 @@ def process_row(im_bytes, total_time):
                 avg_conf = 0
                 
             t = time.time()
-            current_time = t - current_time #model processsing time
+            current_time = t - current_time #model processing time
             total_time = t - total_time # total time take by image to finally output
             absolute_time = t - global_total_time 
 
