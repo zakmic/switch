@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "input_rate": {
+      "type": "number"
+    },
+    "model": {
+      "type": "string"
+    }
+  },
+  "required": ["input_rate", "model"]
+}
