@@ -3,14 +3,15 @@ from Analyzer import Analyzer
 import time
 import pandas as pd
 from Custom_Logger import logger
-
-analyzer_obj = Analyzer()
+import numpy as np
 
 
 class Monitor():
-    def continous_monitoring(self):
-        monitor_dict = {}
+    def __init__(self):
+        self.analyzer_obj = Analyzer()
+        self.monitor_dict = {}
 
+    def continous_monitoring(self):
         # indicates monitoring has started
         logger.info(    {'Component': "Monitor" , "Action": "Started the adaptation effector module" }  ) 
  
@@ -24,25 +25,30 @@ class Monitor():
                     df = pd.read_csv('monitor.csv', header=None)
                     array = df.to_numpy()
 
-                    monitor_dict["input_rate"] = array[0][0]
+                    self.monitor_dict["input_rate"] = array[0][0]
 
                     # retriev current model from model.csv file
                     df = pd.read_csv('model.csv', header=None)
 
                     array = df.to_numpy()
                     model_name = array[0][0]
-                    monitor_dict["model"] = model_name
+                    self.monitor_dict["model"] = model_name
 
                     if (model_name != 'yolov5n' and model_name != 'yolov5s' and model_name != 'yolov5l' and model_name != 'yolov5m' and model_name != 'yolov5x'):
                         continue
 
-                    logger.data(monitor_dict)
+                    logger.data(self.monitor_dict)
                     
-                    analyzer_obj.perform_analysis(monitor_dict)
+                    self.analyzer_obj.perform_analysis(self.monitor_dict)
                     st = time.time()
 
                 except Exception as e:
                     logger.error(e)
+
+    def get_current_monitor_data(self):
+        # convert numpy.int64 into int for jsonable_encoder to process
+        return {key: int(value) if isinstance(value, (np.integer, np.int64)) else value 
+                for key, value in self.monitor_dict.items()}
 
 
 if __name__ == '__main__':
