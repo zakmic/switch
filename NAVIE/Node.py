@@ -9,6 +9,7 @@ from elasticsearch import Elasticsearch
 from typing import Dict
 import csv
 from get_data import write_csv, write_json
+from dotenv import load_dotenv
 
 es = Elasticsearch(['localhost'])
 app = FastAPI()
@@ -24,6 +25,10 @@ app.add_middleware(
 process_running = False
 running_processes = []
 monitor_directory = ''
+
+load_dotenv()
+
+port = os.getenv("PORT", "5000")
 
 def run_in_terminal(command, working_directory=None):
     global running_processes
@@ -131,7 +136,7 @@ async def upload_files(zipFile: UploadFile = File(None), csvFile: UploadFile = F
         run_in_terminal('python3 App.py')
         time.sleep(0.5)
         #Locust to send Request
-        run_in_new_terminal(f'export CSV_FILE="{CSV_FILE}" && export IMAGES_FOLDER="{IMAGES_FOLDER}" && locust -f Request_send.py --headless  --host=http://localhost:5000/v1 --users 1 --spawn-rate 1')
+        run_in_new_terminal(f'export CSV_FILE="{CSV_FILE}" && export IMAGES_FOLDER="{IMAGES_FOLDER}" && locust -f Request_send.py --headless  --host=http://localhost:{port}/v1 --users 1 --spawn-rate 1')
         #to start monitoring
         if(approch == "AdaMLs"):   
             print("RUunning monitor_ada.py---------------------")

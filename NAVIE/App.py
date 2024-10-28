@@ -7,6 +7,7 @@ import csv
 from Custom_Logger import logger
 import os
 import shutil
+from dotenv import load_dotenv
 
 # Creating a FastAPI endpoint.
 app = FastAPI()
@@ -14,7 +15,7 @@ input_rate = 0
 start_time = 0
 total_in = 0
 
-
+load_dotenv()
 
 DETECTION_URL = '/v1/object-detection'
 
@@ -51,7 +52,7 @@ async def predict( image: UploadFile = File(...) ):
 
 
 if __name__ == '__main__':
-    port = 5000
+    port = int(os.getenv("PORT", 5000))
     parser = argparse.ArgumentParser(description='Fast API exposing YOLOv5 model')
     parser.add_argument('--port', default=port, type=int, help='port number')
     opt = parser.parse_args()
