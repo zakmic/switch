@@ -43,7 +43,7 @@ def run_as_background(command):
 
 def run_in_new_terminal(command):
     try:
-        subprocess.Popen(['gnome-terminal', '--', 'bash', '-c', command])
+        subprocess.Popen(command, shell=True)
     except Exception as e:
         print("Couldn't run processes in terminal: ", str(e))
 
