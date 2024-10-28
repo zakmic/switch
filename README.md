@@ -14,7 +14,7 @@ The (relevant) file structure of the project is as follows:
 
 - [`/NAVIE`](/NAVIE)
 
-  - [`Analyzer.py`](/NAVIE/.env) - Contains port configuration.
+  - [`.env`](/NAVIE/.env) - Contains port configuration.
   - [`Analyzer.py`](/NAVIE/Analyzer.py) - Holds analysis-related logic for processing incoming data.
   - [`Api.py`](/NAVIE/Api.py) - Implements the FastAPI REST API.
   - [`App.py`](/NAVIE/App.py) - Main application script for executing various modules in the project.
