@@ -1,12 +1,42 @@
 # SWITCH: An Exemplar for Evaluating Self-Adaptive ML-Enabled Systems
 
-"SWITCH", an exemplar developed to enhance self-adaptive capabilities in Machine Learning-Enabled Systems, through dynamic model SWITCHing in runtime.  "SWITCH" is designed as a comprehensive web service, catering to a broad range of ML scenarios, with its implementation demonstrated through an object detection use case.
+"SWITCH", an exemplar developed to enhance self-adaptive capabilities in Machine Learning-Enabled Systems, through dynamic model SWITCHing in runtime. "SWITCH" is designed as a comprehensive web service, catering to a broad range of ML scenarios, with its implementation demonstrated through an object detection use case.
+
+## File structure
+
+The (relevant) file structure of the project is as follows:
+
+- [`/`](/)
+
+  - [`Dockerfile`](/Dockerfile) - Contains the Docker setup instructions for the main application.
+  - [`docker-compose.yml`](/docker-compose.yml) - Manages and orchestrates multi-container Docker applications (elasticsearch, and kibana).
+  - [`setup.sh`](/setup.sh) - A setup script for initializing the application environment (NAVIE and dashboard).
+
+- [`/NAVIE`](/NAVIE)
+
+  - [`Analyzer.py`](/NAVIE/Analyzer.py) - Holds analysis-related logic for processing incoming data.
+  - [`Api.py`](/NAVIE/Api.py) - Implements the FastAPI REST API.
+  - [`App.py`](/NAVIE/App.py) - Main application script for executing various modules in the project.
+  - [`Execute.py`](/NAVIE/Execute.py) - Manages execution-related tasks for the NAVIE models.
+  - [`Node.py`](/NAVIE/Node.py) - Defines logic for handling nodes in the application's network.
+  - [`Planner.py`](/NAVIE/Planner.py) - Contains logic for planning tasks and actions.
+  - [`Request_send.py`](/NAVIE/Request_send.py) - Used for sending requests to other services or endpoints.
+  - [`knowledge.csv`](/NAVIE/knowledge.csv) and [`naive_knowledge.csv`](/NAVIE/naive_knowledge.csv) - Hold data and knowledge configurations for the NAVIE model.
+  - [`metrics.csv`](/NAVIE/metrics.csv) and [`monitor.csv`](/NAVIE/monitor.csv) - Contain metrics and monitoring data.
+
+  - [`schemas/`](/NAVIE/schemas)
+    - [`adaptation_options_schema.json`](/NAVIE/schemas/adaptation_options_schema.json) - JSON schema for the adaptation options response body.
+    - [`execute_schema.json`](/NAVIE/schemas/execute_schema.json) - JSON schema for the execute request body.
+    - [`monitor_schema.json`](/NAVIE/schemas/monitor_schema.json) - JSON schema for the monitor response body.
+  - [`settings.conf`](/NAVIE/settings.conf) - Holds configuration settings for the NAVIE application.
+
+- [`/public`](/public) - Includes static files, assets, and other resources used by the dashboard.
+
+- [`/src`](/src) - Contains the source code and core modules for the dashboard.
 
 ## Getting started
 
 The system comprises distinct components, including a frontend written in React, a backend powered by FAST API in Python, and Elasticsearch serving as the database. Will be using YOLOv5u as object detection model .
-
-
 
 <details>
 <summary><b>Frontend</b></summary>
@@ -15,7 +45,7 @@ The system comprises distinct components, including a frontend written in React,
 - **Startup Command:** `npm run start`
 - **Port:** 3000
 - **Access:** The web application is accessible at http://localhost:3000.
-  
+
 </details>
 
 <details>
@@ -38,13 +68,13 @@ The system comprises distinct components, including a frontend written in React,
 
 </details>
 
-#### Requirment's:
+#### Requirements:
 
 - Install [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) as standalone binaries.
 - Minimum free space of 7 GB.
 - The system is designed for Linux environments. If you do not have access to a Linux system, you can either utilize a virtual Linux machine or employ a Docker image of a Linux environment.
 - If using virtual enviorment for set-up, pre install virtualenv.
-  
+
 ## Installation
 
 Video for steps of intallation and running the application can be found in:
@@ -52,25 +82,26 @@ Video for steps of intallation and running the application can be found in:
 > Directory: `Video Demonstration`
 
 > Link:
+
 1. Youtube: https://youtu.be/ZIDE1v3jxeQ
 
-2. Google Drive: https://drive.google.com/drive/folders/1eGY1QGXpP4FYkav2G2uusmV6QSHVnoVx?usp=sharing  
+2. Google Drive: https://drive.google.com/drive/folders/1eGY1QGXpP4FYkav2G2uusmV6QSHVnoVx?usp=sharing
 
 If using a zip file for installation:
 
 > Extract the SWITCH folder.
 
->If not already in the directory `SWITCH` directory, use command from the extracted directory:
+> If not already in the directory `SWITCH` directory, use command from the extracted directory:
+
 ```bash
 cd SWITCH
 ```
 
+## Setting up Elastic Search and Kibana
 
-## Setting up Elastic Search and Kibana 
 Start the **docker engine** on your system.
 
 Start Elasticsearch and Kibana containers using Docker Compose with image version 7.9.1, usign command:
-
 
 ```bash
 docker-compose up
@@ -96,11 +127,11 @@ source venv/bin/activate
 <details>
 <summary><b>Installation using setup.sh</b></summary>
 
-
- ```bash
+```bash
 chmod +x setup.sh
 ./setup.sh
 ```
+
 </details>
 
 <details>
@@ -108,11 +139,10 @@ chmod +x setup.sh
  
 ### Importing Dashboard
 
-
 ```bash
 curl -X POST "http://localhost:5601/api/saved_objects/_import" -H "kbn-xsrf: true" --form file=@export.ndjson
 ```
- 
+
 ### Setting up Frontend
 
 To install node module's:
@@ -121,9 +151,7 @@ To install node module's:
 npm install
 ```
 
-
 ### Setting up Backend: Model loader, MAPE-K, Locust a load tester.
-
 
 ```bash
 cd NAVIE
@@ -133,6 +161,7 @@ pip install -r requirements.txt
 python3 process_model.py
 
 ```
+
 </details>
 
 ## Run the application
@@ -140,6 +169,7 @@ python3 process_model.py
 Ensure `docker-compose.yml` is running:
 
 If not running, run following command from directory `SWITCH`
+
 ```bash
 docker-compose up
 ```
@@ -147,52 +177,59 @@ docker-compose up
 **If using virtual enviorment**:
 
 Ensure that you are in the virtual enviorment you had created, you can activate virtual enviorment using command:
-```
+
+```bash
 source venv/bin/activate
 ```
 
-
 Run the backend first for the application from the directory `SWITCH/NAVIE`:
 
-```
+```bash
 python3 Node.py
 ```
 
 Run the React-Application from the directory `SWITCH` :
 
-```
+```bash
 npm run start
 ```
 
+Run the API from the directory `SWITCH/NAVIE` :
+
+```bash
+python3 Api.py
+```
 
 ## Using the Application
 
 ### If the Image folder size is < 500Mb
+
 1. Upload Image folder in .zip format. The .zip file must have same name as the Image folder.
 
 ### If the Image folder size is > 500Mb
+
 1. Enter the full path of your image folder starting from the root directory in the provided text field.
-   
+
 ### Next steps are same for both the way's of giving Image folder as Input.
 
 2. Create a `.csv` file with inter-arrival rates for images and upload it.
 3. Assign an `ID` to your experiment.
 4. Choose an approach for running the experiment:
-    - 4 self-adaptive approaches.
-      - `NAIVE` and `AdaMLs` are different types of provided adaptation techniques.
-      - `Modify NAIVE` modifies the NAIVE algorithm according to user input values.
-      - `Upload MAPE-K file's` is described below.
-    - 5 single model approaches.
+
+   - 4 self-adaptive approaches.
+     - `NAIVE` and `AdaMLs` are different types of provided adaptation techniques.
+     - `Modify NAIVE` modifies the NAIVE algorithm according to user input values.
+     - `Upload MAPE-K file's` is described below.
+   - 5 single model approaches.
 
 5. Click `Upload`.
 6. Once the Dashboard is displayed, you can adjust the refresh rate by clicking on the watch icon. A dropdown menu will appear, allowing you to set the desired refresh rate.
 7. Stop the process or when all images are processed, click `Stop Process`.
 8. Download data for the experiment.
 9. You can stat new experiment by clicking `New Process`
-  
+
 <details>
 <summary><b>Upload MAPE-K file's Guidelines</b></summary>
-
 
 ---
 
@@ -201,10 +238,10 @@ To effectively implement and utilize the MAPE-K framework, follow these steps:
 **Upload the Following Files:**
 
 - **`monitor.py`:**
+
   - Description: This file monitors the relevant metrics for adaptation.
   - Guidelines: Refer to code below to extract nessesary metrics from datastorage.
   - Implementation: Define a planner object and pass the extracted metrics to it.
-  
 
   <details>
   <summary><b>Code for Fetching past n metrics average from Elasticsearch</b></summary>
@@ -253,6 +290,7 @@ To effectively implement and utilize the MAPE-K framework, follow these steps:
             temp_dict[field] = mean_value
 
         return [temp_dict["confidence"], temp_dict["model_processing_time"], temp_dict["detection_boxes"]]
+
   </details>
 
   <details>
@@ -260,71 +298,73 @@ To effectively implement and utilize the MAPE-K framework, follow these steps:
 
       def extract_metric(file_name):
           df = pd.read_csv(file_name, header=None)
-          
+
           array = df.to_numpy()
           return array[0][0]
 
       monitor_dict = {}  # Initialize the dictionary to store monitored values
       monitor_dict["model"] = extract_metric("../model.csv")
       monitor_dict["Input_rate"] = extract_metric("../monitor.csv")
+
   </details>
-  
 
+- **`planner.py`:**
 
- - **`planner.py`:**
-   - Description: This code is responsible for determining the necessity of adaptation.
-   - Implementation: Develop logic within this file to plan and decide whether adaptation is required.
+  - Description: This code is responsible for determining the necessity of adaptation.
+  - Implementation: Develop logic within this file to plan and decide whether adaptation is required.
 
- - **`Analyzer.py`:**
-   - Description: This code determines the result of the adaptation process.
-   - Implementation: Include logic to determine the adaptation step.
+- **`Analyzer.py`:**
 
- - **`Execute.py`:**
-   - Description: Executes the model switch.
-   - Guidelines: Refer to the code below for model switching.
-   - Implementation: Integrate the necessary logic to perform the model switch.
+  - Description: This code determines the result of the adaptation process.
+  - Implementation: Include logic to determine the adaptation step.
 
-    <details>
-    <summary><b>Model switching code</b></summary>
+- **`Execute.py`:**
 
-        def switch_model(model_name):
-          f = open("../model.csv", "w")
-          f.write(model_name)
-          f.close()
-      
-        def perform_action(act):
-          # model switch takes place by changing the model name in the model.csv file .
-          if (act == 1):
-              # switch model to n
-              switch_model("YOLOv5n")
+  - Description: Executes the model switch.
+  - Guidelines: Refer to the code below for model switching.
+  - Implementation: Integrate the necessary logic to perform the model switch.
 
-          elif (act == 2):
-              # switch model to s
-              switch_model("YOLOv5s")
+   <details>
+   <summary><b>Model switching code</b></summary>
 
-          elif (act == 3):
-              # switch model to m
-              switch_model("YOLOv5m")
+       def switch_model(model_name):
+         f = open("../model.csv", "w")
+         f.write(model_name)
+         f.close()
 
-          elif (act == 4):
-              # switch model to l
-              switch_model("YOLOv5l")
+       def perform_action(act):
+         # model switch takes place by changing the model name in the model.csv file .
+         if (act == 1):
+             # switch model to n
+             switch_model("YOLOv5n")
 
-          elif (act == 5):
-              # switch model to xl
-              switch_model("YOLOv5x")
+         elif (act == 2):
+             # switch model to s
+             switch_model("YOLOv5s")
 
-          print("Adaptation completed.")
-    </details>
+         elif (act == 3):
+             # switch model to m
+             switch_model("YOLOv5m")
 
+         elif (act == 4):
+             # switch model to l
+             switch_model("YOLOv5l")
 
- - **`Knowledge.zip`:**
-   - Description: A zip file containing all the knowledge files required by the MAPE-K framework for the successful generation and execution of adaptations.
+         elif (act == 5):
+             # switch model to xl
+             switch_model("YOLOv5x")
+
+         print("Adaptation completed.")
+
+   </details>
+
+- **`Knowledge.zip`:**
+  - Description: A zip file containing all the knowledge files required by the MAPE-K framework for the successful generation and execution of adaptations.
 
 **Folder Structure:**
 
-   - Your code files are saved in a folder structure: `NAIVE/external_MAPE_K_<id>`.
-   - You have the flexibility to make direct changes to any file within this specified directory.
+- Your code files are saved in a folder structure: `NAIVE/external_MAPE_K_<id>`.
+- You have the flexibility to make direct changes to any file within this specified directory.
 
 **Note:**
 
@@ -333,15 +373,14 @@ Ensure that the code files adhere to the specified guidelines for seamless integ
 </details>
 
 ## Stoping the Application
+
 Stoping the application, it is necessary to terminate the associated processes executing in each of the three designated terminals. This involves the cessation of the 'Docker-compose' process in the first terminal, the termination of the 'Node.py' script in the second terminal, and the halting of the 'frontend' process in the third terminal. This can be done by pressign `Ctrl+C` in each terminal
 
+## Using the final result's
 
-
-## Using the final result's 
 If you have downloaded the data for an experiment, the metric's data is stored in a CSV file: `NAVIE/Exported_metrics/exported-data-metrics_{id}` and the logs for the experiment are stored in a JSON file: `NAVIE/Exported_logs/exported-data-logs_{id}`.
- 
-## Filtering based on classes and confidence score:
 
+## Filtering based on classes and confidence score:
 
 This code snippet, to be modified in the `process.py` file located in the `NAVIE` directory, demonstrates the process of filtering object detection results based on class IDs and confidence levels corresponding to the COCO dataset. Users can specify desired classes by adding class filters within the provided loop. Examples for detecting specific classes, such as 'crowd' (class ID 0) and 'dog' (class ID 16), are provided in the comments of the code.
 
@@ -364,9 +403,11 @@ else:
 ```
 
 ## Quick Testing
-To get familiar with the tool we provide Data for testing the tool. In the directory `Quick Testing` we have provided a .zip file containing images, and a .csv format Inter arrival rate file for testing purposes. 
+
+To get familiar with the tool we provide Data for testing the tool. In the directory `Quick Testing` we have provided a .zip file containing images, and a .csv format Inter arrival rate file for testing purposes.
 
 ## Experimental Result's
+
 The conducted experiments encompassed a range of scenarios, including general object detection, crowd detection, and vehicle detection. For each of these experiments, the corresponding metric files and log files have been compiled and are available in the `Experiments` directory.
 
 The Metrics are present in the `Exported_metrics` directory within the `Experiments` directory. The metrics files are named according to the scenarios they are tested for.
@@ -377,4 +418,5 @@ The Images used for Experiment purposes along with inter arrival rate file can b
 https://drive.google.com/drive/folders/1MpaJm6-D0xi3xBcf_D_rr5zqsvoSIiro?usp=sharing
 
 ## Creating a Inter arrival rate file.
-We have also provided a code that scales the `wc_day53-r0-105m-l70.delta` according to the number of Images specified by the user. The code is present in the `Create_rate_file` directory and the code is self-explanatory. 
+
+We have also provided a code that scales the `wc_day53-r0-105m-l70.delta` according to the number of Images specified by the user. The code is present in the `Create_rate_file` directory and the code is self-explanatory.

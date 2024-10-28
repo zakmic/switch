@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "option": {
+      "type": "string",
+      "enum": [
+        "yolov5n_rate_min",
+        "yolov5n_rate_max",
+        "yolov5s_rate_min",
+        "yolov5s_rate_max",
+        "yolov5m_rate_min",
+        "yolov5m_rate_max",
+        "yolov5l_rate_min",
+        "yolov5l_rate_max",
+        "yolov5x_rate_min",
+        "yolov5x_rate_max"
+      ]
+    },
+    "new_value": {
+      "type": "number"
+    }
+  },
+  "required": ["option", "new_value"]
+}

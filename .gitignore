@@ -190,3 +190,9 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/python,react
 
+images
+unzipped
+uploads
+exported-data-logs.json
+exported-data-metrics.csv
+*.pt
