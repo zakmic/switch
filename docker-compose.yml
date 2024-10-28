@@ -3,6 +3,7 @@ version: '3.7'
 services:
   elasticsearch:
     image: elasticsearch:7.9.1
+    container_name: elasticsearch
     ports:
       - '9200:9200'
     environment:
