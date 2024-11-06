@@ -28,6 +28,36 @@ services:
       - elasticsearch
     networks:
       - elk
+
+
+  backend:
+    build:
+      context: ./NAVIE
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    ports:
+      - "3001:3001"
+      - "8089:8089"
+      - "5001:5001"
+    networks:
+      - elk
+    depends_on:
+      - kibana
+
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - elk
+    depends_on:
+      - backend
       
 networks:
   elk:
