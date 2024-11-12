@@ -5,5 +5,5 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 RUN apt-get update && apt-get install -y libgl1
 RUN chmod +x /app/entrypoint.sh
-EXPOSE 3001 8089 5001
+EXPOSE 3001 8089 5001 8000
 CMD ["./entrypoint.sh"]

@@ -24,5 +24,9 @@ curl -X POST 'http://kibana:5601/api/saved_objects/_import' -H 'kbn-xsrf: true' 
 echo "Loading Model's"
 python3 process_model.py
 
-# Start the backend server
-python3 Node.py
+# Start the backend server in background
+python3 Node.py &
+
+# Start the API server
+echo "Starting API server"
+python3 Api.py
