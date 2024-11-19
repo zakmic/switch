@@ -1,0 +1,2 @@
+timestamp,log_id,confidence,model_name,cpu,detection_boxes,model_processing_time,image_processing_time,absolute_time_from_start,utility
+0,0,0.0,unknown,0.0,0,0.0,0.0,0.0,0.0

@@ -5,7 +5,6 @@ import pandas as pd
 from Custom_Logger import logger
 import numpy as np
 
-
 class Monitor():
     def __init__(self):
         self.analyzer_obj = Analyzer()
@@ -26,6 +25,7 @@ class Monitor():
                     array = df.to_numpy()
 
                     self.monitor_dict["input_rate"] = array[0][0]
+                    print("Monitor input rate", self.monitor_dict["input_rate"])
 
                     # retriev current model from model.csv file
                     df = pd.read_csv('model.csv', header=None)
@@ -33,6 +33,11 @@ class Monitor():
                     array = df.to_numpy()
                     model_name = array[0][0]
                     self.monitor_dict["model"] = model_name
+
+                    # Read data from data.csv
+                    df_data = pd.read_csv('data.csv')
+                    latest_data = df_data.iloc[-1].to_dict()  # Get the last row as a dictionary
+                    self.monitor_dict.update(latest_data)
 
                     if (model_name != 'yolov5n' and model_name != 'yolov5s' and model_name != 'yolov5l' and model_name != 'yolov5m' and model_name != 'yolov5x'):
                         continue

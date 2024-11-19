@@ -65,6 +65,15 @@ def process_csv_file():
                     # Add other fields as needed
                 }
 
+                # Print and measure input rate
+                print("log_data", log_data)
+
+                # Write to data.csv
+                with open('data.csv', mode="w", newline='') as f:
+                    writer = csv.DictWriter(f, fieldnames=log_data.keys())
+                    writer.writeheader()
+                    writer.writerow(log_data)
+
                 # Send the log data to Elasticsearch
                 # file.truncate(0)
                 send_to_elasticsearch(log_data)
