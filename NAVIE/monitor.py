@@ -25,7 +25,6 @@ class Monitor():
                     array = df.to_numpy()
 
                     self.monitor_dict["input_rate"] = array[0][0]
-                    print("Monitor input rate", self.monitor_dict["input_rate"])
 
                     # retriev current model from model.csv file
                     df = pd.read_csv('model.csv', header=None)

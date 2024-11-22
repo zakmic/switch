@@ -18,6 +18,12 @@ global_total_time = 0
 
 metric_file_name = "metrics.csv"
 
+# Function to update processed.csv with the current total_processed value
+def update_processed_csv():
+    with open('processed.csv', mode="w", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['total_processed'])
+        writer.writerow([total_processed])
 
 def call_utility(r , C):
     Rmax = 1  # Maximum acceptable response time
@@ -139,7 +145,6 @@ def start_processing():
         image_path_next = f"images/queue{total_processed+1}.csv"
 
         if os.path.exists(image_path) == False:
-            
             logger.error(f"File {total_processed}.csv does not exist")
             if (os.path.exists(image_path_next) == False):
                 time.sleep(0.03)
@@ -168,6 +173,9 @@ def start_processing():
                 os.remove(image_path)
                 # Do something with the processed row
                 logger.data({"Finished Processing File" : total_processed - 1 })
+
+                # Update processed.csv with the new total_processed value
+                update_processed_csv()
 
             except Exception as e:
                 logger.error(f"Skiping a Image file, processing the next")

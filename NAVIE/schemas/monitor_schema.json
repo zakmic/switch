@@ -6,7 +6,50 @@
     },
     "model": {
       "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "log_id": {
+      "type": "number"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "model_name": {
+      "type": "string"
+    },
+    "cpu": {
+      "type": "number"
+    },
+    "detection_boxes": {
+      "type": "number"
+    },
+    "model_processing_time": {
+      "type": "number"
+    },
+    "image_processing_time": {
+      "type": "number"
+    },
+    "absolute_time_from_start": {
+      "type": "number"
+    },
+    "utility": {
+      "type": "number"
     }
   },
-  "required": ["input_rate", "model"]
+  "required": [
+    "input_rate",
+    "model",
+    "timestamp",
+    "log_id",
+    "confidence",
+    "model_name",
+    "cpu",
+    "detection_boxes",
+    "model_processing_time",
+    "image_processing_time",
+    "absolute_time_from_start",
+    "utility"
+  ]
 }
