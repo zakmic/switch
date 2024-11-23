@@ -6,8 +6,7 @@ import time
 from Custom_Logger import logger
 
 # Configure Elasticsearch connection
-es = Elasticsearch(['elasticsearch'])  # Replace with your Elasticsearch host
-
+es = Elasticsearch(['http://localhost:9200'])
 log_file_path = 'logs/Object_detection.log'  # Replace with the actual path to your log file
 
 # Regular expression pattern to extract log data
@@ -63,6 +62,7 @@ while True:
 
         if lines:
             for line in lines:
+                print(line)
                 log_entry = parse_log_data(line)
                 if log_entry:
                     print(log_entry)

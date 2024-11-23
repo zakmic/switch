@@ -16,6 +16,7 @@ class MyUser(HttpUser):
 
         # Read environment variables for folder and CSV file
         IMAGES_FOLDER = os.environ.get('IMAGES_FOLDER')
+        print(f"Images folder: {IMAGES_FOLDER}")
         filename = os.environ.get('CSV_FILE')
 
         # Read CSV file containing time intervals
