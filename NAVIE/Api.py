@@ -105,13 +105,14 @@ def get_execute_schema():
     return schema
 
 @app.put("/execute")
-def new_execute_action(option: str):
+def new_execute_action(model_option: int):
     try:
         #creates Executor object and call's to perform action.
+        print("Got option ", model_option)
         exe_obj = Executor()
-        exe_obj.perform_action(option)
+        exe_obj.perform_action(model_option)
 
-        return {"message": f"Adaptation update to '{option}' executed successfully'."}
+        return {"message": f"Adaptation update to '{model_option}' executed successfully'."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to execute adaptation action: {e}")
 
