@@ -145,7 +145,7 @@ def start_processing():
         image_path_next = f"images/queue{total_processed+1}.csv"
 
         if os.path.exists(image_path) == False:
-            logger.error(f"File {total_processed}.csv does not exist")
+            # logger.error(f"File {total_processed}.csv does not exist")
             if (os.path.exists(image_path_next) == False):
                 time.sleep(0.03)
                 continue

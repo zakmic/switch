@@ -7,7 +7,6 @@ class Executor():
         logger.info(    {'Component': "Executor" , "Action": "Performing Action" }  ) 
         # print('Inside Execute, performing action: ', act)
         logger.data( {"Action": act})
-        
 
         # model switch takes place by changing model name in model.csv file .
         if (act == 1):

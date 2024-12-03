@@ -36,5 +36,5 @@ class Planner():
             return
         
         #creates Executor object and call's to perform action.
-        exe_obj = Executor()
-        exe_obj.perform_action(action)
+        # exe_obj = Executor()
+        # exe_obj.perform_action(action)

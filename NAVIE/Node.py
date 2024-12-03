@@ -150,8 +150,9 @@ async def upload_files(zipFile: UploadFile = File(None), csvFile: UploadFile = F
           
         else:
             with open('model.csv', 'w') as file:
-                writer = csv.writer(file)
-                writer.writerow([approch])
+                print("HAD TO WRITE HERE to model.csv", [approch])
+                # writer = csv.writer(file)
+                # writer.writerow([approch])
         #upload data to ES
         run_in_terminal('python3 logs_to_es.py')
         run_in_terminal('python3 metrics_to_es.py')
