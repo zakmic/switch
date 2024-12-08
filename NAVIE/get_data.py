@@ -3,8 +3,8 @@ import csv
 import json
 from Custom_Logger import logger
 # Connect to Elasticsearch
-# es = Elasticsearch(['http://elasticsearch:9200'])
-es = Elasticsearch(['http://localhost:9200'])
+es = Elasticsearch(['http://elasticsearch:9200'])
+# es = Elasticsearch(['http://localhost:9200'])
 
 # Define the index name and query
 def write_csv(index_name , csv_file):

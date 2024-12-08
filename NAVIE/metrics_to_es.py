@@ -3,7 +3,8 @@ from elasticsearch import Elasticsearch
 import time
 from Custom_Logger import logger
 # Elasticsearch connection settings
-es = Elasticsearch(['http://localhost:9200'],)
+# es = Elasticsearch(['http://localhost:9200'],)
+es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200}])
 
 # Path to your CSV file
 csv_file_path = 'metrics.csv'
@@ -66,7 +67,7 @@ def process_csv_file():
                 }
 
                 # Print and measure input rate
-                print("log_data", log_data)
+                print("Sending metrics for Log ID: ", log_data['log_id'])
 
                 # Write to data.csv
                 with open('data.csv', mode="w", newline='') as f:

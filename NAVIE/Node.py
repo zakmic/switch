@@ -11,7 +11,9 @@ import csv
 from get_data import write_csv, write_json
 from dotenv import load_dotenv
 
-es = Elasticsearch(['http://localhost:9200'])
+# es = Elasticsearch(['http://localhost:9200'])
+es = Elasticsearch(['elasticsearch'])
+
 app = FastAPI()
 sys_approch = "NAIVE"
 # Enable CORS for all routes

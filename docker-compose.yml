@@ -57,8 +57,8 @@ services:
       - "3000:3000"
     networks:
       - elk
-    depends_on:
-      - backend
+#    depends_on:
+#      - backend
       
 networks:
   elk:
