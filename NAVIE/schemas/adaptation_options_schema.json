@@ -1,45 +1,10 @@
 {
   "type": "object",
   "properties": {
-    "yolov5n_rate_min": {
-      "type": "number",
-      "description": "Minimum rate threshold for YOLOv5n model"
-    },
-    "yolov5n_rate_max": {
-      "type": "number",
-      "description": "Maximum rate threshold for YOLOv5n model"
-    },
-    "yolov5s_rate_min": {
-      "type": "number",
-      "description": "Minimum rate threshold for YOLOv5s model"
-    },
-    "yolov5s_rate_max": {
-      "type": "number",
-      "description": "Maximum rate threshold for YOLOv5s model"
-    },
-    "yolov5m_rate_min": {
-      "type": "number",
-      "description": "Minimum rate threshold for YOLOv5m model"
-    },
-    "yolov5m_rate_max": {
-      "type": "number",
-      "description": "Maximum rate threshold for YOLOv5m model"
-    },
-    "yolov5l_rate_min": {
-      "type": "number",
-      "description": "Minimum rate threshold for YOLOv5l model"
-    },
-    "yolov5l_rate_max": {
-      "type": "number",
-      "description": "Maximum rate threshold for YOLOv5l model"
-    },
-    "yolov5x_rate_min": {
-      "type": "number",
-      "description": "Minimum rate threshold for YOLOv5x model"
-    },
-    "yolov5x_rate_max": {
-      "type": "number",
-      "description": "Maximum rate threshold for YOLOv5x model"
+    "model_option": {
+      "type": "string",
+      "enum": ["yolov5n", "yolov5s", "yolov5m", "yolov5l", "yolov5x"]
     }
-  }
+  },
+  "required": ["model_option"]
 }
