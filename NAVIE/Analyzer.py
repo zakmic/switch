@@ -35,7 +35,7 @@ class Analyzer():
 
     def perform_analysis(self, monitor_dict):
 
-        logger.info(    {'Component': "Analyzer" , "Action": "Performing the analysis" }  ) 
+        logger.info(    {'Component': "Analyzer" , "Action": "Performing the analysis" }  )
 
         input_rate = monitor_dict["input_rate"]
         model = monitor_dict["model"]
@@ -57,7 +57,7 @@ class Analyzer():
             elif (current_time - self.time > 0.25):
 
                 self.count += 1
-                logger.info(    {'Component': "Analyzer" , "Action": "Creating Planner object" }  ) 
+                logger.info(    {'Component': "Analyzer" , "Action": "Creating Planner object" }  )
                 plan_obj = Planner(input_rate, model)
                 plan_obj.generate_adaptation_plan(self.count)
 
